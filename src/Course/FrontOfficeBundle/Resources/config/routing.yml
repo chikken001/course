@@ -1,0 +1,3 @@
+course_front_office_homepage:
+    path:     /
+    defaults: { _controller: CourseFrontOfficeBundle:Default:index }

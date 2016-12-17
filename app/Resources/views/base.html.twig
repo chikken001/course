@@ -2,12 +2,69 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+        <title>{% block title %}Course{% endblock %}</title>
+        <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+
+        {% block stylesheets %}
+            {% stylesheets filter='?cssembed,cssrewrite,?yui_css'
+            'bundles/Cms/css/cms.css'
+            'bundles/Cms/css/libs/bootstrap.css'
+            'bundles/Cms/css/libs/bootstrap-theme.css'
+            %}
+
+            <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+
+            {% endstylesheets %}
+        {% endblock %}
+
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
+
     <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+        {% block header %}{% endblock %}
+
+        {% block flash %}
+            {% for flashMessage in app.session.flashbag.get('notice') %}
+                <div class="alert alert-success">
+                    <strong>Success !</strong> {{ flashMessage }}
+                </div>
+            {% endfor %}
+
+            {% for flashMessage in app.session.flashbag.get('error') %}
+                <div class="alert alert-danger">
+                    <strong>Erreur !</strong> {{ flashMessage }}
+                </div>
+            {% endfor %}
+
+            {% for flashMessage in app.session.flashbag.get('info') %}
+                <div class="alert alert-info">
+                    <strong>Info !</strong> {{ flashMessage }}
+                </div>
+            {% endfor %}
+
+            {% for flashMessage in app.session.flashbag.get('warning') %}
+                <div class="alert alert-warning">
+                    <strong>Warning !</strong> {{ flashMessage }}
+                </div>
+            {% endfor %}
+        {% endblock %}
+
+        {% block content %}{% endblock %}
+
+        {% block footer %}{% endblock %}
+
+        {% block javascripts %}
+
+            {% javascripts filter='?yui_js'
+            'bundles/Cms/js/libs/jquery2.0.3.min.js'
+            'bundles/Cms/js/libs/bootstrap.js'
+            'bundles/Cms/js/libs/npm.js'
+            'bundles/Cms/js/cms.js'
+            %}
+            <script src="{{ asset_url }}"></script>
+
+            {% endjavascripts %}
+        {% endblock %}
     </body>
+
 </html>

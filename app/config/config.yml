@@ -2,11 +2,15 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: services.yml }
+    - { resource: "@CourseMainBundle/Resources/config/services.yml" }
+    - { resource: "@CourseBackOfficeBundle/Resources/config/services.yml" }
+    - { resource: "@CourseFrontOfficeBundle/Resources/config/services.yml" }
+    - { resource: "@CourseCmsBundle/Resources/config/services.yml" }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    locale: en
+    locale: fr
 
 framework:
     #esi:             ~
@@ -65,37 +69,43 @@ swiftmailer:
     password:  "%mailer_password%"
     spool:     { type: memory }
     
-# FOS User Bundle
+# FosUser Configuration
 fos_user:
     db_driver: orm
     firewall_name: main
-    user_class: AveaPatrimoine\MainBundle\Entity\User
+    user_class: Course\MainBundle\Entity\User
     service:
         mailer: fos_user.mailer.twig_swift
     registration:
         form:
-            type: avea_patrimoine_fos_user_register
+            type: course_fos_user_register
             validation_groups: [Register, Default, Registration]
         confirmation:
             enabled: true
-            template: AveaPatrimoineBackOfficeBundle:Registration:email.html.twig
+            template: CourseBackOfficeBundle:Registration:email.html.twig
     profile:
         form:
-            type: avea_patrimoine_fos_user_profile
+            type: course_fos_user_profile
             #validation_groups: [Profile, Default]
     resetting:
         email:
-            template: AveaPatrimoineBackOfficeBundle:Resetting:email.html.twig
+            template: CourseBackOfficeBundle:Resetting:email.html.twig
     group:
-        group_class: AveaPatrimoine\MainBundle\Entity\Group
+        group_class: Course\MainBundle\Entity\Group
     from_email:
-        address: contact@avea.asso.fr
-        sender_name: avea
+        address: contact@course.fr
+        sender_name: course
         
 # Assetic Configuration
 assetic:
   debug: "%kernel.debug%"
   use_controller: false
-  bundles: [ AveaPatrimoineMainBundle, AveaPatrimoineBackOfficeBundle, AveaPatrimoineCmsBundle ]
+  bundles: [ CourseBackOfficeBundle, CourseCmsBundle ]
   filters:
-    cssrewrite: ~
+      cssrewrite: ~
+      yui_css:
+          jar: "%kernel.root_dir%/Resources/java/yuicompressor-2.4.8.jar"
+      yui_js:
+          jar: "%kernel.root_dir%/Resources/java/yuicompressor-2.4.8.jar"
+      cssembed:
+          jar: "%kernel.root_dir%/Resources/java/cssembed-0.4.5.jar"

@@ -1,0 +1,19 @@
+# SECURITY
+course_back_office_security_login:
+    path:     /login
+    defaults: { _controller: CourseBackOfficeBundle:Security:login }
+
+course_back_office_security_check:
+    path:     /login-check
+    defaults: { _controller: CourseBackOfficeBundle:Security:check }
+    requirements:
+        _method: POST
+
+course_back_office_security_logout:
+    path:     /logout
+    defaults: { _controller: CourseBackOfficeBundle:Security:logout }
+
+# BACKOFFICE
+course_back_office_homepage:
+    path:     /
+    defaults: { _controller: CourseBackOfficeBundle:Default:index }

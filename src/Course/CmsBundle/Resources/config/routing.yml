@@ -1,0 +1,6 @@
+# DEFAULT
+
+course_cms_homepage:
+    path:     /
+    defaults: { _controller: CourseCmsBundle:Default:index }
+    methods: [GET]

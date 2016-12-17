@@ -1,4 +1,4 @@
-my_project
+Test technique Bonzai Digital
 ==========
 
-A Symfony project created on November 27, 2016, 3:21 pm.
+Mini application de gestion de liste de courses
