@@ -31,7 +31,7 @@ class UserFixtures extends AbstractFixture implements FixtureInterface, OrderedF
      */
     public function getOrder()
     {
-        return 1;
+        return 3;
     }
 
     public function load(ObjectManager $manager)
@@ -55,8 +55,8 @@ class UserFixtures extends AbstractFixture implements FixtureInterface, OrderedF
         $user->setRoles(array(User::ROLE_USER));
         $user->setUsername('user');
         $user->setUsernameCanonical('user');
-        $user->setEmail('aujean.thomas@gmail.com');
-        $user->setEmailCanonical('aujean.thomas@gmail.com');
+        $user->setEmail('user@gmail.com');
+        $user->setEmailCanonical('user@gmail.com');
         $user->setPlainPassword('qqq');
         $user->setEnabled(1);
         $user->setGender('M');

@@ -4,3 +4,20 @@ course_cms_homepage:
     path:     /
     defaults: { _controller: CourseCmsBundle:Default:index }
     methods: [GET]
+    
+# PRESTATION
+
+course_cms_categorie_liste:
+    path:     /categorie/liste
+    defaults: { _controller: CourseCmsBundle:Categorie:liste }
+    methods: [GET]
+
+course_cms_categorie_add:
+    path: /categorie/add
+    defaults: { _controller: CourseCmsBundle:Categorie:addCategorie }
+    condition: "request.isXmlHttpRequest()"
+
+course_cms_categorie_remove:
+    path: /categorie/remove
+    defaults: { _controller: CourseCmsBundle:Categorie:removeCategorie }
+    condition: "request.isXmlHttpRequest()"

@@ -38,7 +38,7 @@ class Categorie
 
     /**
      * Une catégorie a plusieurs produits.
-     * @OneToMany(targetEntity="Course\MainBundle\Entity\Produit", mappedBy="categorie" cascade={"persist","remove"})
+     * @ORM\OneToMany(targetEntity="Course\MainBundle\Entity\Produit", mappedBy="categorie", cascade={"persist","remove"})
      */
     private $produits;
 

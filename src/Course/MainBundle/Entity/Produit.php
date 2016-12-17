@@ -32,7 +32,7 @@ class Produit
     /**
      * @var
      *
-     * @ORM\ManyToOne(targetEntity="Course\MainBundle\Entity\Categorie", cascade="persist")
+     * @ORM\ManyToOne(targetEntity="Course\MainBundle\Entity\Categorie", inversedBy="produits", cascade="persist")
      * @ORM\JoinColumn(nullable=false)
      */
     private $categorie;

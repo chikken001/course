@@ -1,0 +1,145 @@
+{% extends "CourseCmsBundle::layout.html.twig" %}
+
+{% block title %}Catégories{% endblock %}
+
+{% block content %}
+
+    <ol class="breadcrumb">
+        <li>
+            <a href="{{ path('course_cms_homepage') }}">Liste de course</a>
+        </li>
+        <li>
+            <a href="{{ path('course_cms_categorie_liste') }}">Catégories</a>
+        </li>
+    </ol>
+
+    <div class="alert alert-danger fade in" id="alert-categorie" style="display:none;">
+        <button type="button" class="close">×</button>
+        <p></p>
+    </div>
+
+    <div>
+        <div class="row">
+            <div class="container-fluid table-categorie">
+                <div class="table-responsive col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-2 col-md-8">
+
+                    <table class="table table-striped">
+
+                        <thead>
+                        <tr>
+                            <th>Nom</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <input type="text" class="form-control" name="nom" id="nom"/>
+                                </td>
+                                <td class="text-center">
+                                    <span id="submit-row" class="btn btn-primary">Ajouter</span>
+                                </td>
+                            </tr>
+                            {% for categorie in categories %}
+                                <tr>
+                                    <td class="text-center">{{ categorie.nom }}</td>
+                                    <td class="text-center">
+                                        <span class="btn btn-xs btn-danger remove-row" data-categorie-id="{{ categorie.id }}">Supprimer</span>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    {{ parent() }}
+
+    <script>
+        $(document).ready(function()
+        {
+            $('#alert-categorie .close').on('click', function(e) {
+                $(this).parent().hide();
+            });
+
+            $('#submit-row').on('click', function()
+            {
+                $('#alert-categorie').hide();
+
+                var categorie = {};
+
+                categorie.nom = $('#nom').val();
+
+                $.ajax({
+                    url: "{{ path('course_cms_categorie_add') }}",
+                    method: 'post',
+                    data: {categorie: categorie},
+                    dataTypes: 'json',
+                    success: function(data)
+                    {
+                        if(data['message'] == 'ok')
+                        {
+                            $('#nom').val('') ;
+                            $('tbody').append('<tr><td class="text-center">'+data['nom']+'</td><td class="text-center"><span class="btn btn-xs btn-danger remove-row" data-categorie-id="'+data['id']+'">Supprimer</span></td></tr>');
+
+                            $('tbody tr:last-child td:last-child span').on('click', function(event) {
+                                remove_categorie(this);
+                            });
+                        }
+                        else
+                        {
+                            $('#alert-categorie p').text(data['message']) ;
+                            $('#alert-categorie').show();
+                        }
+                    },
+                    error: function(error){
+                        $('#alert-categorie p').text('Une erreur est survenue') ;
+                        $('#alert-categorie').show();
+                    },
+                });
+
+            });
+
+            $('.remove-row').on('click', function(event) {
+                remove_categorie(this);
+            });
+        });
+
+        function remove_categorie($supprimer)
+        {
+            var r = confirm('Voulez vous vraimment supprimer cette catégorie ?');
+            if (r == false) return false;
+
+            var id_categorie = $($supprimer).attr('data-categorie-id');
+
+            $.ajax({
+                url: "{{ path('course_cms_categorie_remove') }}",
+                method: 'post',
+                data: {id: id_categorie},
+                dataTypes: 'json',
+                success: function(data)
+                {
+                    if(data['message'] == 'ok')
+                    {
+                        $($supprimer).parent().parent().remove();
+                    }
+                },
+                error: function(error){
+                    $('#alert-categorie p').text('Une erreur est survenue') ;
+                    $('#alert-categorie').show();
+                },
+            });
+        }
+
+    </script>
+
+{% endblock %}

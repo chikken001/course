@@ -21,50 +21,54 @@
     </head>
 
     <body>
-        {% block header %}{% endblock %}
+        <div class="container" id="main-contener">
+            <div class="container-fluid">
+            {% block header %}{% endblock %}
 
-        {% block flash %}
-            {% for flashMessage in app.session.flashbag.get('notice') %}
-                <div class="alert alert-success">
-                    <strong>Success !</strong> {{ flashMessage }}
-                </div>
-            {% endfor %}
+            {% block flash %}
+                {% for flashMessage in app.session.flashbag.get('notice') %}
+                    <div class="alert alert-success fade in">
+                        <strong>Success !</strong> {{ flashMessage }}
+                    </div>
+                {% endfor %}
 
-            {% for flashMessage in app.session.flashbag.get('error') %}
-                <div class="alert alert-danger">
-                    <strong>Erreur !</strong> {{ flashMessage }}
-                </div>
-            {% endfor %}
+                {% for flashMessage in app.session.flashbag.get('error') %}
+                    <div class="alert alert-danger fade in">
+                        <strong>Erreur !</strong> {{ flashMessage }}
+                    </div>
+                {% endfor %}
 
-            {% for flashMessage in app.session.flashbag.get('info') %}
-                <div class="alert alert-info">
-                    <strong>Info !</strong> {{ flashMessage }}
-                </div>
-            {% endfor %}
+                {% for flashMessage in app.session.flashbag.get('info') %}
+                    <div class="alert alert-info fade in">
+                        <strong>Info !</strong> {{ flashMessage }}
+                    </div>
+                {% endfor %}
 
-            {% for flashMessage in app.session.flashbag.get('warning') %}
-                <div class="alert alert-warning">
-                    <strong>Warning !</strong> {{ flashMessage }}
-                </div>
-            {% endfor %}
-        {% endblock %}
+                {% for flashMessage in app.session.flashbag.get('warning') %}
+                    <div class="alert alert-warning fade in">
+                        <strong>Warning !</strong> {{ flashMessage }}
+                    </div>
+                {% endfor %}
+            {% endblock %}
 
-        {% block content %}{% endblock %}
+            {% block content %}{% endblock %}
 
-        {% block footer %}{% endblock %}
+            {% block footer %}{% endblock %}
 
-        {% block javascripts %}
+            </div>
+        </div>
 
-            {% javascripts filter='?yui_js'
-            'bundles/Cms/js/libs/jquery2.0.3.min.js'
-            'bundles/Cms/js/libs/bootstrap.js'
-            'bundles/Cms/js/libs/npm.js'
-            'bundles/Cms/js/cms.js'
-            %}
-            <script src="{{ asset_url }}"></script>
+            {% block javascripts %}
 
-            {% endjavascripts %}
-        {% endblock %}
+                {% javascripts filter='?yui_js'
+                'bundles/Cms/js/libs/jquery2.0.3.min.js'
+                'bundles/Cms/js/libs/bootstrap.js'
+                'bundles/Cms/js/cms.js'
+                %}
+                <script src="{{ asset_url }}"></script>
+
+                {% endjavascripts %}
+            {% endblock %}
     </body>
 
 </html>
