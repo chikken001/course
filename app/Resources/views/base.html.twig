@@ -27,25 +27,29 @@
 
             {% block flash %}
                 {% for flashMessage in app.session.flashbag.get('notice') %}
-                    <div class="alert alert-success fade in">
+                    <div class="alert alert-success alert-dismissible">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                         <strong>Success !</strong> {{ flashMessage }}
                     </div>
                 {% endfor %}
 
                 {% for flashMessage in app.session.flashbag.get('error') %}
-                    <div class="alert alert-danger fade in">
+                    <div class="alert alert-danger alert-dismissible">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                         <strong>Erreur !</strong> {{ flashMessage }}
                     </div>
                 {% endfor %}
 
                 {% for flashMessage in app.session.flashbag.get('info') %}
-                    <div class="alert alert-info fade in">
+                    <div class="alert alert-info alert-dismissible">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                         <strong>Info !</strong> {{ flashMessage }}
                     </div>
                 {% endfor %}
 
                 {% for flashMessage in app.session.flashbag.get('warning') %}
-                    <div class="alert alert-warning fade in">
+                    <div class="alert alert-warning alert-dismissible">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                         <strong>Warning !</strong> {{ flashMessage }}
                     </div>
                 {% endfor %}

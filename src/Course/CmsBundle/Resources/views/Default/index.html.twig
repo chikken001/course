@@ -1,5 +1,99 @@
 {% extends 'CourseCmsBundle::layout.html.twig' %}
 
+{% block title %}Liste de course{% endblock %}
+
 {% block content %}
-Hello world
+
+    <ol class="breadcrumb">
+        <li>
+            <a href="{{ path('course_cms_homepage') }}">Liste de course</a>
+        </li>
+    </ol>
+
+    {% if categories is not empty %}
+
+        <a href="" style="display:inline-block; margin-bottom:10px;" class="btn btn-danger btn-lg btn-block" title="Supprimer" role="button">Vider ma liste de course</a>
+
+        {% form_theme form _self %}
+
+        <div class="col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-2 col-md-8" style="margin-bottom:10px;">
+            {{ form_start(form) }}
+                <div class="col-xs-5 col-sm-5 col-md-5">
+                    {{ form_row(form.categorie) }}
+                </div>
+
+                <div class="input-group col-xs-7 col-sm-7 col-md-7">
+                    {{ form_row(form.nom) }}
+
+                    <span class="input-group-btn">
+                        {{ form_row(form.submit) }}
+                    </span>
+                </div>
+            {{ form_end(form) }}
+        </div>
+
+        <div class="col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-2 col-md-8">
+
+            {% for categorie in categories %}
+
+                {% set produits = categorie.getProduits() %}
+
+                {% if produits is not empty %}
+
+                    <div class="panel panel-default">
+
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                {{ categorie.getNom() }}
+                                <a href="{{ path('course_cms_categorie_delete_produit', {'id': categorie.id}) }}" style="color:white; float:right;" class="btn btn-danger btn-xs" title="Supprimer" role="button">
+                                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                </a>
+                            </h3>
+                        </div>
+
+                        <div class="panel-body">
+                            <ul class="list-group" style="margin:0;">
+                                {% for produit in produits %}
+                                    <li class="list-group-item">{{ produit.getNom() }}
+                                    <a href="{{ path('course_cms_produit_delete', {'id': produit.id}) }}" style="float:right;" class="btn btn-danger btn-xs" title="Supprimer" role="button">
+                                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                    </a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+
+                    </div>
+
+                {% endif %}
+
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-center text-danger" style="font-weight:bold;">Il faut créer des catégories de produits avant de pouvoir faire la liste de courses</p>
+    {% endif %}
+
+
+{% endblock %}
+
+{% block javascripts %}
+
+    {{ parent() }}
+
+    <script>
+
+        $(document).ready(function()
+        {
+            $('.btn-block').on('click', function(event)
+            {
+                event.preventDefault();
+
+                if (confirm('Voulez vous vraimment supprimer tous les produits ?') == false) return false;
+
+                window.location = ('{{ path('course_cms_produit_delete_all') }}');
+            });
+        });
+
+    </script>
+
 {% endblock %}

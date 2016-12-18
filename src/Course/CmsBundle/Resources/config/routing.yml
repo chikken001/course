@@ -3,9 +3,8 @@
 course_cms_homepage:
     path:     /
     defaults: { _controller: CourseCmsBundle:Default:index }
-    methods: [GET]
     
-# PRESTATION
+# CATEGORIE
 
 course_cms_categorie_liste:
     path:     /categorie/liste
@@ -21,3 +20,23 @@ course_cms_categorie_remove:
     path: /categorie/remove
     defaults: { _controller: CourseCmsBundle:Categorie:removeCategorie }
     condition: "request.isXmlHttpRequest()"
+
+course_cms_categorie_delete_produit:
+    path: /categorie/{id}/supprimer_produits
+    defaults: { _controller: CourseCmsBundle:Categorie:deleteProduit }
+    methods: [GET, POST]
+    requirements:
+        id: "\d+"
+
+# PRODUIT
+
+course_cms_produit_delete:
+  path: /supprimer-produit/{id}
+  defaults: { _controller: CourseCmsBundle:Produit:delete }
+  methods: [GET, POST]
+  requirements:
+      id: "\d+"
+
+course_cms_produit_delete_all:
+  path: /supprimer-produits
+  defaults: { _controller: CourseCmsBundle:Produit:deleteAll }

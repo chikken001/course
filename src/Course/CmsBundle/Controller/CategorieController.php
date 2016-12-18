@@ -12,7 +12,7 @@ class CategorieController extends Controller
     /**
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listeAction()
+    public function listeAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -86,5 +86,29 @@ class CategorieController extends Controller
         ));
 
         return $response;
+    }
+
+    /**
+     * @param Request $request
+     * @param Categorie $categorie
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function deleteProduitAction(Request $request, Categorie $categorie)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $produits = $categorie->getProduits();
+
+        foreach($produits as $produit)
+        {
+            $categorie->removeProduit($produit);
+            $em->remove($produit);
+        }
+
+        $em->flush();
+
+        $this->get('session')->getFlashBag()->add('notice', 'Les produits de la catégorie "'.$categorie->getNom().'" ont étaient supprimés');
+
+        return $this->redirect($this->generateUrl('course_cms_homepage'));
     }
 }

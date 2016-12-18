@@ -28,7 +28,7 @@
                         <thead>
                         <tr>
                             <th>Nom</th>
-                            <th></th>
+                            <th>Action</th>
                         </tr>
                         </thead>
 
@@ -116,8 +116,7 @@
 
         function remove_categorie($supprimer)
         {
-            var r = confirm('Voulez vous vraimment supprimer cette catégorie ?');
-            if (r == false) return false;
+            if (confirm('Voulez vous vraimment supprimer cette catégorie ?') == false) return false;
 
             var id_categorie = $($supprimer).attr('data-categorie-id');
 
